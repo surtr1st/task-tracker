@@ -60,14 +60,7 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 				tasks[i].Description = value
 				tasks[i].UpdatedAt = updatedAt
 			case UPDATE_STATUS:
-				switch value {
-				case string(FLAG_DONE):
-					tasks[i].Status = DONE
-				case string(FLAG_IN_PROGRESS):
-					tasks[i].Status = IN_PROGRESS
-				case string(TODO):
-					tasks[i].Status = TODO
-				}
+				tasks[i].Status = TaskStatus(value)
 				tasks[i].UpdatedAt = updatedAt
 			}
 		}
