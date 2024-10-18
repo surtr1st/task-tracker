@@ -3,9 +3,11 @@ package internal
 import "os"
 
 const (
-	WINDOWS_HOME = "USERPROFILE"
-	LINUX_HOME   = "HOME"
-	MAC_HOME     = "HOME"
+	WINDOWS     = "LOCALAPPDATA"
+	LINUX       = "HOME"
+	MAC         = "HOME"
+	BASE_FOLDER = "task-tracker"
+	FILEDATA    = "data.json"
 )
 
 func UseEnv(value string) string {
