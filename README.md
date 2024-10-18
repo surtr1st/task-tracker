@@ -58,21 +58,24 @@ Commands for handling task operations should be simple and intuitive.
 ### Adding a task
 
 ```bash
-# ./cmd add "Shopping"
+# Add 1 task
 ttc add <description>
+
+# Add multiple tasks, separating by a comma
+ttc add "<1>, <2>, <3>"
 ```
 
 ### Updating a task
 
 ```bash
-# ./cmd update 1 "Adding new feature"
+# Update 1 task
 ttc update <id> <description>
 ```
 
 ### Deleting a task
 
 ```bash
-# ./cmd rm 1
+# Remove 1 task
 ttc rm <id>
 ```
 
