@@ -32,6 +32,7 @@ const (
 	_IN_PROGRESS = "ip"
 	_TODO        = "todo"
 	INIT         = "init"
+	HELP         = "help"
 )
 
 type FilterStatus string
