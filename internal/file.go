@@ -13,7 +13,7 @@ func InitData(targetFile string) error {
 			if IsWindows() {
 				dir = filepath.Join(UseEnv(WINDOWS), BASE_FOLDER)
 			} else {
-				dir = filepath.Join(UseEnv(LINUX), ".local", BASE_FOLDER)
+				dir = filepath.Join(UseEnv(LINUX), LOCALLINUX, BASE_FOLDER)
 			}
 
 			if mkdirErr := os.MkdirAll(dir, os.ModePerm); mkdirErr != nil {
