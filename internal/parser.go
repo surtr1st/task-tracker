@@ -29,7 +29,7 @@ func (parser *taskParser) SetFile(filepath string) {
 	parser.fileByte = dat
 }
 
-func (parser taskParser) Content() TaskList {
+func (parser taskParser) Get() TaskList {
 	content := parser.fileByte
 	if content == nil {
 		log.Fatal("Content is missing or invalid!")
@@ -43,4 +43,18 @@ func (parser taskParser) Content() TaskList {
 	return tasks
 }
 
-func (parser taskParser) Update() {}
+func (parser taskParser) ToMap() map[int]Task {
+	tasks := parser.Get().Tasks
+	table := make(map[int]Task)
+	for _, task := range tasks {
+		table[task.Id] = task
+	}
+	return table
+}
+
+func (parser taskParser) Compose(content []byte) error {
+	if err := os.WriteFile(parser.path, content, 0644); err != nil {
+		return err
+	}
+	return nil
+}
