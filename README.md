@@ -25,11 +25,11 @@ Go version 1.22+
 Cloning and building the project:
 
 ```bash
-# Windows
+# Windows (Temporary Session)
 
-git clone https://github.com/surtr1st/task-tracker.git && cd task-tracker
+cd $env:LOCALAPPDATA && git clone https://github.com/surtr1st/task-tracker.git && cd task-tracker
 go build -o ./build/ttc.exe
-set PATH="$PATH;$LOCALAPPDATA\task-tracker\build"
+$env:PATH += ";$env:LOCALAPPDATA\task-tracker\build"
 ```
 
 ```bash
