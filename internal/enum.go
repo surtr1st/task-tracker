@@ -17,9 +17,10 @@ const (
 )
 
 const (
-	INVALID_INPUT     = "Your input ID is missing or not a number."
+	INVALID_INPUT     = "Your input ID is missing or not a number!"
 	MISSING_FILE_PATH = "File path is empty!"
 	MISSING_CONTENT   = "Content is missing or invalid!"
+	MISSING_TASK_ID   = "Missing specify task ID!"
 )
 
 const (
@@ -45,15 +46,12 @@ const (
 type FilterUpdateProperty string
 
 const (
-	UPDATE_DESCRIPTION FilterUpdateProperty = "description"
+	UPDATE_DESCRIPTION FilterUpdateProperty = "desc"
 	UPDATE_STATUS      FilterUpdateProperty = "status"
 )
 
 var (
 	INEXISTENCE_TASK = "Task with ID '%d' does not exist"
-)
-
-var (
-	UPDATED_TASK = "Updated task with ID: %d"
-	REMOVED_TASK = "Removed task with ID: %d"
+	UPDATED_TASK     = "Updated task with ID: %d"
+	REMOVED_TASK     = "Removed task with ID: %d"
 )
