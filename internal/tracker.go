@@ -52,6 +52,7 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 		return "", fmt.Errorf(INEXISTENCE_TASK, id)
 	}
 
+	var desc string
 	for i, task := range tasks {
 		if task.Id == id {
 			updatedAt := FormatDate(time.Now())
@@ -62,6 +63,7 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 			case UPDATE_STATUS:
 				tasks[i].Status = TaskStatus(value)
 				tasks[i].UpdatedAt = updatedAt
+				desc = task.Description
 			}
 		}
 	}
@@ -76,7 +78,12 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 		return "", err
 	}
 
-	return fmt.Sprintf(UPDATED_TASK, id), nil
+	switch filter {
+	case UPDATE_STATUS:
+		return fmt.Sprintf(SET_TASK_TO, id, desc, value), nil
+	default:
+		return fmt.Sprintf(UPDATED_TASK, id), nil
+	}
 }
 
 func (tracker taskTracker) List(filter FilterStatus) {
@@ -102,9 +109,11 @@ func (tracker taskTracker) Remove(id int) (string, error) {
 		return "", fmt.Errorf(INEXISTENCE_TASK, id)
 	}
 
+	var desc string
 	for i, task := range tasks {
 		if task.Id == id {
 			tasks = append(tasks[:i], tasks[i+1:]...)
+			desc = task.Description
 		}
 	}
 
@@ -118,5 +127,5 @@ func (tracker taskTracker) Remove(id int) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf(REMOVED_TASK, id), nil
+	return fmt.Sprintf(REMOVED_TASK, desc, id), nil
 }

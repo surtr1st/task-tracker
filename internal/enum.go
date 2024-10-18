@@ -55,5 +55,6 @@ var (
 	INEXISTENCE_TASK = "Task with ID '%d' does not exist"
 	ADDED_TASK       = "Added new task! ID: %d"
 	UPDATED_TASK     = "Updated task with ID: %d"
-	REMOVED_TASK     = "Removed task with ID: %d"
+	REMOVED_TASK     = "Removed task `%s` with ID: %d"
+	SET_TASK_TO      = "Task with ID: %d - `%s` has set to '%s'"
 )
