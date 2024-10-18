@@ -12,7 +12,6 @@ const (
 	WINDOWS     = "LOCALAPPDATA"
 	LINUX       = "HOME"
 	MAC         = "HOME"
-	LOCALLINUX  = ".local/share"
 	BASE_FOLDER = "task-tracker"
 	FILEDATA    = "data.json"
 )

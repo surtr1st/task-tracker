@@ -13,7 +13,7 @@ func InitData(targetFile string) error {
 			if IsWindows() {
 				dir = filepath.Join(UseEnv(WINDOWS), BASE_FOLDER)
 			} else {
-				dir = filepath.Join(UseEnv(LINUX), LOCALLINUX, BASE_FOLDER)
+				dir = filepath.Join(UseEnv(LINUX), BASE_FOLDER)
 			}
 
 			if mkdirErr := os.MkdirAll(dir, os.ModePerm); mkdirErr != nil {
@@ -45,5 +45,5 @@ func Data() string {
 	if IsWindows() {
 		return fmt.Sprintf("%s\\%s\\%s", UseEnv(WINDOWS), BASE_FOLDER, FILEDATA)
 	}
-	return fmt.Sprintf("%s/.local/%s/%s", UseEnv(LINUX), BASE_FOLDER, FILEDATA)
+	return fmt.Sprintf("%s/%s/%s", UseEnv(LINUX), BASE_FOLDER, FILEDATA)
 }
