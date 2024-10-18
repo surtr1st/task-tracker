@@ -2,7 +2,6 @@ package internal
 
 import (
 	"encoding/json"
-	"log"
 	"os"
 )
 
@@ -17,36 +16,32 @@ func UseTaskParser() *taskParser {
 
 func (parser *taskParser) SetFile(filepath string) {
 	if filepath == "" {
-		log.Fatal("File path is empty!")
+		LogError(MISSING_FILE_PATH)
 	}
 
 	dat, err := os.ReadFile(filepath)
 	if err != nil {
-		log.Fatal(err)
+		if err := InitData(filepath); err != nil {
+			LogError(err.Error())
+		}
 	}
-
 	parser.path = filepath
 	parser.fileByte = dat
+
 }
 
 func (parser taskParser) Get() TaskList {
 	content := parser.fileByte
 	if content == nil {
-		log.Fatal("Content is missing or invalid!")
+		LogError(MISSING_CONTENT)
 	}
 
 	var tasks TaskList
 	if err := json.Unmarshal(content, &tasks); err != nil {
-		log.Fatal(err)
+		LogError(err.Error())
 	}
 
 	return tasks
-}
-
-func (parser taskParser) ToMap(tasks []Task) TaskList {
-	var list TaskList
-
-	return list
 }
 
 func (parser taskParser) Compose(content []byte) error {
