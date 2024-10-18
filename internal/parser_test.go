@@ -7,15 +7,16 @@ import (
 	"time"
 )
 
+var parser = UseTaskParser()
+
 func TestCompose(t *testing.T) {
-	parser := UseTaskParser()
 	parser.SetFile(fmt.Sprintf("%s\\%s\\%s", UseEnv(WINDOWS), BASE_FOLDER, FILEDATA))
 	task := Task{
 		Id:          1,
 		Description: "Test",
-		Status:      "To Do",
-		CreatedAt:   time.Now().String(),
-		UpdatedAt:   time.Now().String(),
+		Status:      TODO,
+		CreatedAt:   FormatDate(time.Now()),
+		UpdatedAt:   "-",
 	}
 	tasks := TaskList{
 		Tasks: []Task{task},
@@ -29,16 +30,15 @@ func TestCompose(t *testing.T) {
 	}
 }
 
-func TestAppending(t *testing.T) {
-	parser := UseTaskParser()
+func TestAppend(t *testing.T) {
 	parser.SetFile(fmt.Sprintf("%s\\%s\\%s", UseEnv(WINDOWS), BASE_FOLDER, FILEDATA))
 	prevTasks := parser.Get().Tasks
 	task := Task{
 		Id:          2,
 		Description: "Test",
-		Status:      "To Do",
-		CreatedAt:   time.Now().String(),
-		UpdatedAt:   time.Now().String(),
+		Status:      TODO,
+		CreatedAt:   FormatDate(time.Now()),
+		UpdatedAt:   "-",
 	}
 	prevTasks = append(prevTasks, task)
 	tasks := TaskList{
