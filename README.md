@@ -1,16 +1,13 @@
 # Task Tracker - Roadmap.sh Project
 
 ## Table of Content
-[Introduction](#introduction)
-[Getting Started](#getting-started)
-[Handle task operations](#handle-task-operations)
-- [Add task](#add-task)
-- [Update task](#update-task)
-- [Delete task](#delete-task)
-- [List tasks](#list-tasks)
-    - [List all tasks that are done](#list-all-tasks-that-are-done)
-    - [List all todo tasks only](#list-all-todo-tasks-only)
-    - [List all tasks that are in progress](#list-all-tasks-that-are-in-progress)
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Handling task operations](#handling-task-operations)
+    - [Addding a task](#adding-a-task)
+    - [Updating a task](#updating-atask)
+    - [Deleting a task](#deleting-a-task)
+    - [Listing tasks](#listing-tasks)
 
 ## Introduction
 
@@ -18,62 +15,77 @@ Task Tracker is a beginner project governed by [Roadmap.sh](https://roadmap.sh/p
 
 ## Getting Started
 
+Cloning and building the project:
 
 ```bash
 git clone https://github.com/surtr1st/task-tracker.git && cd task-tracker
 go build ./cmd
 ```
 
-## Handle task operations
+Using `init` to initialize the data file in your machine. The file data will usually auto-create whenever you're using any commands. But if any unexpected errors occur, you may use this just in case.
 
-### Add task
+```bash
+./cmd init
+```
+This tool does not have autocomplete, so you may use the `help` subcommand to show an available list of subcommands.
+
+```bash
+./cmd help
+```
+
+## Handling task operations
+
+Commands for handling task operations should be simple and intuitive.
+
+### Adding a task
 
 ```bash
 # ./cmd add "Shopping"
 ./cmd add <description>
 ```
 
-### Update task
-
+### Updating a task
 
 ```bash
 # ./cmd update 1 "Adding new feature"
 ./cmd update <id> <description>
 ```
 
-### Delete task
-
+### Deleting a task
 
 ```bash
 # ./cmd rm 1
 ./cmd rm <id>
 ```
 
-### List tasks
+### Listing tasks
 
+This subcommand also has the `help` subcommand in order to list all subcommands of the `list` subcommand.
+
+```bash
+./cmd list help
+```
+
+Listing all tasks without any status filter
 
 ```bash
 ./cmd list
 ```
 
-#### List all tasks that are done
-
+Listing all tasks that are done
 
 ```bash
 ./cmd list done
 ```
 
-#### List all todo tasks only
-
+Listing all todo tasks only
 
 ```bash
 ./cmd list todo
 ```
 
-#### List all tasks that are in progress
-
+Listing all tasks that are in progress
 
 ```bash
 ./cmd list ip
 ```
-
