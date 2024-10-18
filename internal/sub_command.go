@@ -7,13 +7,14 @@ import (
 )
 
 const (
-	ADD             = "add"
-	UPDATE          = "update"
-	REMOVE          = "rm"
-	LIST            = "list"
-	SET_DONE        = "done"
-	SET_IN_PROGRESS = "ip"
-	INIT            = "init"
+	ADD          = "add"
+	UPDATE       = "update"
+	REMOVE       = "rm"
+	LIST         = "list"
+	_DONE        = "done"
+	_IN_PROGRESS = "ip"
+	_TODO        = "todo"
+	INIT         = "init"
 )
 
 func ParseSubcommands() {
@@ -41,23 +42,25 @@ func ParseSubcommands() {
 			LogError(INVALID_INPUT)
 		}
 		fmt.Println(task.Remove(id))
-	case SET_DONE:
+	case _DONE:
 		id := args[1]
 		fmt.Println(id)
 	case LIST:
 		if len(args) > 1 {
 			if args[1] == "--" {
 				switch args[2] {
-				case SET_DONE:
+				case _DONE:
 					break
-				case SET_IN_PROGRESS:
+				case _IN_PROGRESS:
+					break
+				default:
 					break
 				}
 			}
 		} else {
 			task.List()
 		}
-	case SET_IN_PROGRESS:
+	case _IN_PROGRESS:
 		id := args[1]
 		fmt.Println(id)
 	}
