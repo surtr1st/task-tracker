@@ -13,11 +13,7 @@ type taskTracker struct {
 
 func UseTaskTracker() *taskTracker {
 	parser := UseTaskParser()
-	if IsWindows() {
-		parser.SetFile(fmt.Sprintf("%s\\%s\\%s", UseEnv(WINDOWS), BASE_FOLDER, FILEDATA))
-	} else {
-		parser.SetFile(fmt.Sprintf("%s/.local/%s/%s", UseEnv(LINUX), BASE_FOLDER, FILEDATA))
-	}
+	parser.SetFile(Data())
 	return &taskTracker{
 		parser,
 	}

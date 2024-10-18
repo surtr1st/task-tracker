@@ -5,16 +5,15 @@ import (
 	"os"
 )
 
-func InitStorage(name string) error {
+func InitData(name string) error {
 	if _, err := os.Open(name); err != nil {
-		var home string
+		var dir string
 		if IsWindows() {
-			home = UseEnv(WINDOWS)
+			dir = fmt.Sprintf("%s\\%s", UseEnv(WINDOWS), BASE_FOLDER)
 		} else {
-			home = UseEnv(LINUX)
+			dir = fmt.Sprintf("%s/.local/%s", UseEnv(LINUX), BASE_FOLDER)
 		}
 
-		dir := fmt.Sprintf("%s\\%s", home, BASE_FOLDER)
 		if mkdirErr := os.Mkdir(dir, os.ModePerm); mkdirErr != nil {
 			return mkdirErr
 		}
@@ -35,4 +34,11 @@ func InitStorage(name string) error {
 		}
 	}
 	return nil
+}
+
+func Data() string {
+	if IsWindows() {
+		return fmt.Sprintf("%s\\%s\\%s", UseEnv(WINDOWS), BASE_FOLDER, FILEDATA)
+	}
+	return fmt.Sprintf("%s/.local/%s/%s", UseEnv(LINUX), BASE_FOLDER, FILEDATA)
 }
