@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+func UseEnv(value string) string {
+	return os.Getenv(value)
+}
+
 func IsWindows() bool {
 	return runtime.GOOS == "windows"
 }
