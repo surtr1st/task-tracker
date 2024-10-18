@@ -1,13 +1,5 @@
 package internal
 
-type TaskStatus string
-
-const (
-	TODO        TaskStatus = "To Do"
-	IN_PROGRESS TaskStatus = "In-Progress"
-	DONE        TaskStatus = "Done"
-)
-
 type Task struct {
 	Id          int        `json:"id"`
 	Description string     `json:"description"`

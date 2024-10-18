@@ -6,17 +6,6 @@ import (
 	"strconv"
 )
 
-const (
-	ADD          = "add"
-	UPDATE       = "update"
-	REMOVE       = "rm"
-	LIST         = "list"
-	_DONE        = "done"
-	_IN_PROGRESS = "ip"
-	_TODO        = "todo"
-	INIT         = "init"
-)
-
 func ParseSubcommands() {
 	task := UseTaskTracker()
 	flag.Parse()
@@ -47,18 +36,9 @@ func ParseSubcommands() {
 		fmt.Println(id)
 	case LIST:
 		if len(args) > 1 {
-			if args[1] == "--" {
-				switch args[2] {
-				case _DONE:
-					break
-				case _IN_PROGRESS:
-					break
-				default:
-					break
-				}
-			}
+			task.List(FilterFlagList(args[1]))
 		} else {
-			task.List()
+			task.List(FLAG_NONE)
 		}
 	case _IN_PROGRESS:
 		id := args[1]
