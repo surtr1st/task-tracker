@@ -6,9 +6,7 @@ import (
 )
 
 func TestInitStorage(t *testing.T) {
-	home := UseEnv(WINDOWS)
-	filename := "data.json"
-	file := fmt.Sprintf("%s\\%s\\%s", home, BASE_FOLDER, filename)
+	file := fmt.Sprintf("%s\\%s\\%s", UseEnv(WINDOWS), BASE_FOLDER, FILEDATA)
 	if err := InitStorage(file); err != nil {
 		t.Fatal(err)
 	}
