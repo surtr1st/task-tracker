@@ -8,6 +8,7 @@
     - [Updating a task](#updating-atask)
     - [Deleting a task](#deleting-a-task)
     - [Listing tasks](#listing-tasks)
+    - [Flushing tasks](#flushing-tasks)
 
 ## Introduction
 
@@ -88,4 +89,12 @@ Listing all tasks that are in progress
 
 ```bash
 ./cmd list ip
+```
+
+### Flushing tasks
+
+This subcommand is generally used for testing, but you may use it as you please.
+
+```bash
+./cmd flush
 ```
