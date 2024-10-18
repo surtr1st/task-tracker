@@ -1,7 +1,13 @@
 package main
 
-import "tasktracker/internal"
+import (
+	"flag"
+	"tasktracker/internal"
+)
 
 func main() {
-	internal.ParseSubcommands()
+	flag.Parse()
+	subcommand := internal.UseSubcommand(flag.Args())
+	subcommand.Init()
+	subcommand.ParseSubcommands()
 }

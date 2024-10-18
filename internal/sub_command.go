@@ -1,17 +1,33 @@
 package internal
 
 import (
-	"flag"
+	"bufio"
 	"fmt"
+	"os"
 	"strconv"
+	"strings"
 )
 
-func ParseSubcommands() {
-	task := UseTaskTracker()
-	flag.Parse()
-	args := flag.Args()
+type Subcommand struct {
+	args []string
+}
 
-	if len(args) == 0 {
+func UseSubcommand(args []string) *Subcommand {
+	return &Subcommand{args}
+}
+
+func (subcmd Subcommand) Init() {
+	if err := InitData(Data()); err != nil {
+		LogError(err.Error())
+	}
+}
+
+func (subcmd Subcommand) ParseSubcommands() {
+	task := UseTaskTracker()
+
+	args := subcmd.args
+
+	if len(subcmd.args) == 0 {
 		showHelpCommand()
 		return
 	}
@@ -25,7 +41,7 @@ func ParseSubcommands() {
 	case ADD:
 		if len(args) > 1 {
 			description := args[1]
-			if description == "" {
+			if strings.TrimSpace(description) == "" {
 				LogError(MISSING_CONTENT)
 			}
 
@@ -39,19 +55,23 @@ func ParseSubcommands() {
 		}
 
 	case UPDATE:
-		if len(args) > 1 {
+		if len(args) > 2 {
 			id, err := strconv.Atoi(args[1])
 			if err != nil {
 				LogError(INVALID_INPUT)
 			}
 
-			result, err := task.Update(id, args[2], UPDATE_DESCRIPTION)
+			description := args[2]
+			if strings.TrimSpace(description) == "" {
+				LogError(MISSING_CONTENT)
+			}
+			result, err := task.Update(id, description, UPDATE_DESCRIPTION)
 			if err != nil {
 				LogError(err.Error())
 			}
 			fmt.Println(result)
 		} else {
-			LogError(MISSING_TASK_ID)
+			LogError(MISSING_REQUIRED_VALUES)
 		}
 
 	case REMOVE:
@@ -113,13 +133,31 @@ func ParseSubcommands() {
 			LogError(MISSING_TASK_ID)
 		}
 
+	case FLUSH:
+		scanner := bufio.NewScanner(os.Stdin)
+		fmt.Print("Are you sure you want to remove all available tasks? y/n: ")
+		for scanner.Scan() {
+			answer := strings.ToLower(scanner.Text())
+			if answer == "y" {
+				fmt.Println("Clearing all tasks...")
+				result, err := task.RemoveAll()
+				if err != nil {
+					LogError(err.Error())
+				}
+				fmt.Println(result)
+				break
+			} else if answer == "n" {
+				break
+			}
+		}
+
 	default:
 		showHelpCommand()
 	}
 }
 
 func showHelpCommand() {
-	subcommands := []string{INIT, ADD, UPDATE, REMOVE, LIST, _DONE, _IN_PROGRESS, _TODO, HELP}
+	subcommands := []string{INIT, ADD, UPDATE, REMOVE, LIST, _DONE, _IN_PROGRESS, _TODO, HELP, FLUSH}
 	descriptives := map[string]string{
 		INIT:         "Initializing file data for storing tasks",
 		ADD:          "Adding new task",
@@ -130,6 +168,7 @@ func showHelpCommand() {
 		_IN_PROGRESS: "Set status 'In-Progress' to a task by ID",
 		_TODO:        "Set status 'To Do' to a task by ID",
 		HELP:         "Show subcommand list",
+		FLUSH:        "Flush and clear all tasks",
 	}
 
 	columnWidth := 10
