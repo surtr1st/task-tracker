@@ -11,8 +11,8 @@ type taskParser struct {
 	fileByte []byte
 }
 
-func UseTaskParser() taskParser {
-	return taskParser{}
+func UseTaskParser() *taskParser {
+	return &taskParser{}
 }
 
 func (parser *taskParser) SetFile(filepath string) {
@@ -43,13 +43,10 @@ func (parser taskParser) Get() TaskList {
 	return tasks
 }
 
-func (parser taskParser) ToMap() map[int]Task {
-	tasks := parser.Get().Tasks
-	table := make(map[int]Task)
-	for _, task := range tasks {
-		table[task.Id] = task
-	}
-	return table
+func (parser taskParser) ToMap(tasks []Task) TaskList {
+	var list TaskList
+
+	return list
 }
 
 func (parser taskParser) Compose(content []byte) error {
