@@ -29,7 +29,6 @@ func (tracker taskTracker) Add(description string) (string, error) {
 
 	descriptions := strings.Split(description, ",")
 	for _, desc := range descriptions {
-		id += 1
 		value := strings.TrimSpace(desc)
 		if value != "" {
 			task := Task{
@@ -41,6 +40,7 @@ func (tracker taskTracker) Add(description string) (string, error) {
 			}
 			tasks = append(tasks, task)
 		}
+		id += 1
 	}
 
 	value, err := json.MarshalIndent(TaskList{Tasks: tasks}, "", " ")
