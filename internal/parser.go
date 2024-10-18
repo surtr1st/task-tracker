@@ -59,3 +59,14 @@ func (parser taskParser) Compose(content []byte) error {
 	}
 	return nil
 }
+
+func (parser taskParser) Filter(status TaskStatus) []Task {
+	var filterTasks []Task
+	tasks := parser.Get().Tasks
+	for _, task := range tasks {
+		if task.Status == status {
+			filterTasks = append(filterTasks, task)
+		}
+	}
+	return filterTasks
+}

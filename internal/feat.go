@@ -82,32 +82,14 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 func (tracker taskTracker) List(filter FilterFlagList) {
 	switch filter {
 	case FLAG_DONE:
-		var done []Task
-		tasks := tracker.parser.Get().Tasks
-		for _, task := range tasks {
-			if task.Status == DONE {
-				done = append(done, task)
-			}
-		}
-		PrintTable(done)
+		PrintTable(tracker.parser.Filter(DONE))
+
 	case FLAG_IN_PROGRESS:
-		var inProgresses []Task
-		tasks := tracker.parser.Get().Tasks
-		for _, task := range tasks {
-			if task.Status == IN_PROGRESS {
-				inProgresses = append(inProgresses, task)
-			}
-		}
-		PrintTable(inProgresses)
+		PrintTable(tracker.parser.Filter(IN_PROGRESS))
+
 	case FLAG_TODO:
-		var todos []Task
-		tasks := tracker.parser.Get().Tasks
-		for _, task := range tasks {
-			if task.Status == TODO {
-				todos = append(todos, task)
-			}
-		}
-		PrintTable(todos)
+		PrintTable(tracker.parser.Filter(TODO))
+
 	case FLAG_NONE:
 		PrintTable(tracker.parser.Get().Tasks)
 	}
