@@ -133,6 +133,22 @@ func (subcmd Subcommand) ParseSubcommands() {
 			LogError(MISSING_TASK_ID)
 		}
 
+	case _TODO:
+		if len(args) > 1 {
+			id, err := strconv.Atoi(args[1])
+			if err != nil {
+				LogError(INVALID_INPUT)
+			}
+
+			result, err := task.Update(id, string(TODO), UPDATE_STATUS)
+			if err != nil {
+				LogError(err.Error())
+			}
+			fmt.Println(result)
+		} else {
+			LogError(MISSING_TASK_ID)
+		}
+
 	case FLUSH:
 		scanner := bufio.NewScanner(os.Stdin)
 		fmt.Print("Are you sure you want to remove all available tasks? y/n: ")
