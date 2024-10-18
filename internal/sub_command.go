@@ -10,6 +10,7 @@ func ParseSubcommands() {
 	task := UseTaskTracker()
 	flag.Parse()
 	args := flag.Args()
+
 	switch args[0] {
 	case INIT:
 		if err := InitData(Data()); err != nil {
@@ -17,31 +18,48 @@ func ParseSubcommands() {
 		}
 
 	case ADD:
-		description := args[1]
-		fmt.Println(task.Add(description))
+		if len(args) > 1 {
+			description := args[1]
+			if description == "" {
+				LogError(MISSING_CONTENT)
+			}
+			fmt.Println(task.Add(description))
+		} else {
+			LogError(MISSING_CONTENT)
+		}
 
 	case UPDATE:
-		id, err := strconv.Atoi(args[1])
-		if err != nil {
-			LogError(INVALID_INPUT)
-		}
-		switch args[2] {
-		case string(FLAG_IN_PROGRESS), string(FLAG_DONE), string(FLAG_TODO):
-			fmt.Println(task.Update(id, args[2], UPDATE_STATUS))
-		default:
+		if len(args) > 1 {
+			id, err := strconv.Atoi(args[1])
+			if err != nil {
+				LogError(INVALID_INPUT)
+			}
 			fmt.Println(task.Update(id, args[2], UPDATE_DESCRIPTION))
+		} else {
+			LogError(MISSING_TASK_ID)
 		}
 
 	case REMOVE:
-		id, err := strconv.Atoi(args[1])
-		if err != nil {
-			LogError(INVALID_INPUT)
+		if len(args) > 1 {
+			id, err := strconv.Atoi(args[1])
+			if err != nil {
+				LogError(INVALID_INPUT)
+			}
+			fmt.Println(task.Remove(id))
+		} else {
+			LogError(MISSING_TASK_ID)
 		}
-		fmt.Println(task.Remove(id))
 
 	case _DONE:
-		id := args[1]
-		fmt.Println(id)
+		if len(args) > 1 {
+			id, err := strconv.Atoi(args[1])
+			if err != nil {
+				LogError(INVALID_INPUT)
+			}
+			fmt.Println(task.Update(id, string(DONE), UPDATE_STATUS))
+		} else {
+			LogError(MISSING_TASK_ID)
+		}
 
 	case LIST:
 		if len(args) > 1 {
@@ -51,7 +69,14 @@ func ParseSubcommands() {
 		}
 
 	case _IN_PROGRESS:
-		id := args[1]
-		fmt.Println(id)
+		if len(args) > 1 {
+			id, err := strconv.Atoi(args[1])
+			if err != nil {
+				LogError(INVALID_INPUT)
+			}
+			fmt.Println(task.Update(id, string(IN_PROGRESS), UPDATE_STATUS))
+		} else {
+			LogError(MISSING_TASK_ID)
+		}
 	}
 }
