@@ -16,6 +16,12 @@ Task Tracker is a beginner project governed by [Roadmap.sh](https://roadmap.sh/p
 
 ## Getting Started
 
+### Prerequisites
+
+```bash
+Go version 1.22+
+```
+
 Cloning and building the project:
 
 ```bash
@@ -78,25 +84,25 @@ This subcommand also has the `help` subcommand in order to list all subcommands 
 ttc list help
 ```
 
-Listing all tasks without any status filter
+Listing all tasks without any status filter:
 
 ```bash
 ttc list
 ```
 
-Listing all tasks that are done
+Listing all tasks that are done:
 
 ```bash
 ttc list done
 ```
 
-Listing all todo tasks only
+Listing all todo tasks only:
 
 ```bash
 ttc list todo
 ```
 
-Listing all tasks that are in progress
+Listing all tasks that are in progress:
 
 ```bash
 ttc list ip
@@ -104,7 +110,7 @@ ttc list ip
 
 ### Flushing tasks
 
-This subcommand is generally used for testing, but you may use it as you please.
+This subcommand is generally used for testing, but you may use it as you please:
 
 ```bash
 ttc flush
