@@ -3,6 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -26,14 +27,22 @@ func (tracker taskTracker) Add(description string) (string, error) {
 		id = totalTask + 1
 	}
 
-	task := Task{
-		Id:          id,
-		Description: description,
-		Status:      TODO,
-		CreatedAt:   FormatDate(time.Now()),
-		UpdatedAt:   "-",
+	descriptions := strings.Split(description, ",")
+	for _, desc := range descriptions {
+		id += 1
+		value := strings.TrimSpace(desc)
+		if value != "" {
+			task := Task{
+				Id:          id,
+				Description: value,
+				Status:      TODO,
+				CreatedAt:   FormatDate(time.Now()),
+				UpdatedAt:   "-",
+			}
+			tasks = append(tasks, task)
+		}
 	}
-	tasks = append(tasks, task)
+
 	value, err := json.MarshalIndent(TaskList{Tasks: tasks}, "", " ")
 	if err != nil {
 		return "", err
@@ -42,7 +51,7 @@ func (tracker taskTracker) Add(description string) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf(ADDED_TASK, id), nil
+	return ADDED_TASK, nil
 }
 
 func (tracker taskTracker) Update(id int, value string, filter FilterUpdateProperty) (string, error) {
@@ -128,4 +137,19 @@ func (tracker taskTracker) Remove(id int) (string, error) {
 	}
 
 	return fmt.Sprintf(REMOVED_TASK, desc, id), nil
+}
+
+func (tracker taskTracker) RemoveAll() (string, error) {
+	updatedContent, err := json.MarshalIndent(TaskList{
+		Tasks: []Task{},
+	}, "", " ")
+
+	if err != nil {
+		return "", err
+	}
+	if err := tracker.parser.Compose(updatedContent); err != nil {
+		return "", err
+	}
+
+	return REMOVE_ALL_TASKS, nil
 }
