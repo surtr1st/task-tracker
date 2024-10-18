@@ -45,13 +45,31 @@ func (tracker taskTracker) Add(description string) string {
 	return fmt.Sprintf("Added new task! ID: %d", id)
 }
 
-func (tracker taskTracker) Update(id int, value string) string {
+func (tracker taskTracker) Update(id int, value string, filter FilterUpdateProperty) string {
 	tasks := tracker.parser.Get().Tasks
+
+	if _, ok := tracker.parser.VerifyTable()[id]; !ok {
+		return fmt.Sprintf(INEXISTENCE_TASK, id)
+	}
 
 	for i, task := range tasks {
 		if task.Id == id {
-			tasks[i].Description = value
-			tasks[i].UpdatedAt = FormatDate(time.Now())
+			updatedAt := FormatDate(time.Now())
+			switch filter {
+			case UPDATE_DESCRIPTION:
+				tasks[i].Description = value
+				tasks[i].UpdatedAt = updatedAt
+			case UPDATE_STATUS:
+				switch value {
+				case string(FLAG_DONE):
+					tasks[i].Status = DONE
+				case string(FLAG_IN_PROGRESS):
+					tasks[i].Status = IN_PROGRESS
+				case string(TODO):
+					tasks[i].Status = TODO
+				}
+				tasks[i].UpdatedAt = updatedAt
+			}
 		}
 	}
 
@@ -65,7 +83,7 @@ func (tracker taskTracker) Update(id int, value string) string {
 		LogError(err.Error())
 	}
 
-	return fmt.Sprintf("Updated task with ID: %d", id)
+	return fmt.Sprintf(UPDATED_TASK, id)
 }
 
 func (tracker taskTracker) List(filter FilterFlagList) {
@@ -105,6 +123,10 @@ func (tracker taskTracker) List(filter FilterFlagList) {
 func (tracker taskTracker) Remove(id int) string {
 	tasks := tracker.parser.Get().Tasks
 
+	if _, ok := tracker.parser.VerifyTable()[id]; !ok {
+		return fmt.Sprintf(INEXISTENCE_TASK, id)
+	}
+
 	for i, task := range tasks {
 		if task.Id == id {
 			tasks = append(tasks[:i], tasks[i+1:]...)
@@ -121,5 +143,5 @@ func (tracker taskTracker) Remove(id int) string {
 		LogError(err.Error())
 	}
 
-	return fmt.Sprintf("Removed task with ID: %d", id)
+	return fmt.Sprintf(REMOVED_TASK, id)
 }
