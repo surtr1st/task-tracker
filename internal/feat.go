@@ -18,7 +18,7 @@ func UseTaskTracker() *taskTracker {
 	}
 }
 
-func (tracker taskTracker) Add(description string) string {
+func (tracker taskTracker) Add(description string) (string, error) {
 	id := 1
 	tasks := tracker.parser.Get().Tasks
 	totalTask := len(tasks)
@@ -36,20 +36,20 @@ func (tracker taskTracker) Add(description string) string {
 	tasks = append(tasks, task)
 	value, err := json.MarshalIndent(TaskList{Tasks: tasks}, "", " ")
 	if err != nil {
-		LogError(err.Error())
+		return "", err
 	}
 	if err := tracker.parser.Compose(value); err != nil {
-		LogError(err.Error())
+		return "", err
 	}
 
-	return fmt.Sprintf("Added new task! ID: %d", id)
+	return fmt.Sprintf(ADDED_TASK, id), nil
 }
 
-func (tracker taskTracker) Update(id int, value string, filter FilterUpdateProperty) string {
+func (tracker taskTracker) Update(id int, value string, filter FilterUpdateProperty) (string, error) {
 	tasks := tracker.parser.Get().Tasks
 
 	if _, ok := tracker.parser.VerifyTable()[id]; !ok {
-		return fmt.Sprintf(INEXISTENCE_TASK, id)
+		return "", fmt.Errorf(INEXISTENCE_TASK, id)
 	}
 
 	for i, task := range tasks {
@@ -70,13 +70,13 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 		Tasks: tasks,
 	}, "", " ")
 	if err != nil {
-		LogError(err.Error())
+		return "", err
 	}
 	if err := tracker.parser.Compose(updatedContent); err != nil {
-		LogError(err.Error())
+		return "", err
 	}
 
-	return fmt.Sprintf(UPDATED_TASK, id)
+	return fmt.Sprintf(UPDATED_TASK, id), nil
 }
 
 func (tracker taskTracker) List(filter FilterStatus) {
@@ -95,11 +95,11 @@ func (tracker taskTracker) List(filter FilterStatus) {
 	}
 }
 
-func (tracker taskTracker) Remove(id int) string {
+func (tracker taskTracker) Remove(id int) (string, error) {
 	tasks := tracker.parser.Get().Tasks
 
 	if _, ok := tracker.parser.VerifyTable()[id]; !ok {
-		return fmt.Sprintf(INEXISTENCE_TASK, id)
+		return "", fmt.Errorf(INEXISTENCE_TASK, id)
 	}
 
 	for i, task := range tasks {
@@ -112,11 +112,11 @@ func (tracker taskTracker) Remove(id int) string {
 		Tasks: tasks,
 	}, "", " ")
 	if err != nil {
-		LogError(err.Error())
+		return "", err
 	}
 	if err := tracker.parser.Compose(updatedContent); err != nil {
-		LogError(err.Error())
+		return "", err
 	}
 
-	return fmt.Sprintf(REMOVED_TASK, id)
+	return fmt.Sprintf(REMOVED_TASK, id), nil
 }

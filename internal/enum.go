@@ -52,6 +52,7 @@ const (
 
 var (
 	INEXISTENCE_TASK = "Task with ID '%d' does not exist"
+	ADDED_TASK       = "Added new task! ID: %d"
 	UPDATED_TASK     = "Updated task with ID: %d"
 	REMOVED_TASK     = "Removed task with ID: %d"
 )

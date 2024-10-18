@@ -23,7 +23,12 @@ func ParseSubcommands() {
 			if description == "" {
 				LogError(MISSING_CONTENT)
 			}
-			fmt.Println(task.Add(description))
+
+			result, err := task.Add(description)
+			if err != nil {
+				LogError(err.Error())
+			}
+			fmt.Println(result)
 		} else {
 			LogError(MISSING_CONTENT)
 		}
@@ -34,7 +39,12 @@ func ParseSubcommands() {
 			if err != nil {
 				LogError(INVALID_INPUT)
 			}
-			fmt.Println(task.Update(id, args[2], UPDATE_DESCRIPTION))
+
+			result, err := task.Update(id, args[2], UPDATE_DESCRIPTION)
+			if err != nil {
+				LogError(err.Error())
+			}
+			fmt.Println(result)
 		} else {
 			LogError(MISSING_TASK_ID)
 		}
@@ -45,7 +55,12 @@ func ParseSubcommands() {
 			if err != nil {
 				LogError(INVALID_INPUT)
 			}
-			fmt.Println(task.Remove(id))
+
+			result, err := task.Remove(id)
+			if err != nil {
+				LogError(err.Error())
+			}
+			fmt.Println(result)
 		} else {
 			LogError(MISSING_TASK_ID)
 		}
@@ -56,7 +71,12 @@ func ParseSubcommands() {
 			if err != nil {
 				LogError(INVALID_INPUT)
 			}
-			fmt.Println(task.Update(id, string(DONE), UPDATE_STATUS))
+
+			result, err := task.Update(id, string(DONE), UPDATE_STATUS)
+			if err != nil {
+				LogError(err.Error())
+			}
+			fmt.Println(result)
 		} else {
 			LogError(MISSING_TASK_ID)
 		}
@@ -74,7 +94,12 @@ func ParseSubcommands() {
 			if err != nil {
 				LogError(INVALID_INPUT)
 			}
-			fmt.Println(task.Update(id, string(IN_PROGRESS), UPDATE_STATUS))
+
+			result, err := task.Update(id, string(IN_PROGRESS), UPDATE_STATUS)
+			if err != nil {
+				LogError(err.Error())
+			}
+			fmt.Println(result)
 		} else {
 			LogError(MISSING_TASK_ID)
 		}
