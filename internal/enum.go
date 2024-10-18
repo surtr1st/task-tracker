@@ -41,3 +41,19 @@ const (
 	FLAG_TODO        FilterFlagList = "--todo"
 	FLAG_NONE        FilterFlagList = "none"
 )
+
+type FilterUpdateProperty string
+
+const (
+	UPDATE_DESCRIPTION FilterUpdateProperty = "description"
+	UPDATE_STATUS      FilterUpdateProperty = "status"
+)
+
+var (
+	INEXISTENCE_TASK = "Task with ID '%d' does not exist"
+)
+
+var (
+	UPDATED_TASK = "Updated task with ID: %d"
+	REMOVED_TASK = "Removed task with ID: %d"
+)
