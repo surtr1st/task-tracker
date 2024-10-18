@@ -44,6 +44,15 @@ func (parser taskParser) Get() TaskList {
 	return tasks
 }
 
+func (parser taskParser) VerifyTable() map[int]interface{} {
+	verifyTable := make(map[int]interface{})
+	tasks := parser.Get().Tasks
+	for _, task := range tasks {
+		verifyTable[task.Id] = task
+	}
+	return verifyTable
+}
+
 func (parser taskParser) Compose(content []byte) error {
 	if err := os.WriteFile(parser.path, content, 0644); err != nil {
 		return err
