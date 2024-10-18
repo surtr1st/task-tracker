@@ -34,13 +34,13 @@ const (
 	INIT         = "init"
 )
 
-type FilterFlagList string
+type FilterStatus string
 
 const (
-	FLAG_DONE        FilterFlagList = "--done"
-	FLAG_IN_PROGRESS FilterFlagList = "--ip"
-	FLAG_TODO        FilterFlagList = "--todo"
-	FLAG_NONE        FilterFlagList = "none"
+	FILTER_DONE        FilterStatus = "done"
+	FILTER_IN_PROGRESS FilterStatus = "ip"
+	FILTER_TODO        FilterStatus = "todo"
+	FILTER_NONE        FilterStatus = "none"
 )
 
 type FilterUpdateProperty string

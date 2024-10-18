@@ -79,18 +79,18 @@ func (tracker taskTracker) Update(id int, value string, filter FilterUpdatePrope
 	return fmt.Sprintf(UPDATED_TASK, id)
 }
 
-func (tracker taskTracker) List(filter FilterFlagList) {
+func (tracker taskTracker) List(filter FilterStatus) {
 	switch filter {
-	case FLAG_DONE:
+	case FILTER_DONE:
 		PrintTable(tracker.parser.Filter(DONE))
 
-	case FLAG_IN_PROGRESS:
+	case FILTER_IN_PROGRESS:
 		PrintTable(tracker.parser.Filter(IN_PROGRESS))
 
-	case FLAG_TODO:
+	case FILTER_TODO:
 		PrintTable(tracker.parser.Filter(TODO))
 
-	case FLAG_NONE:
+	case FILTER_NONE:
 		PrintTable(tracker.parser.Get().Tasks)
 	}
 }

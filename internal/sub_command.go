@@ -63,9 +63,9 @@ func ParseSubcommands() {
 
 	case LIST:
 		if len(args) > 1 {
-			task.List(FilterFlagList(args[1]))
+			task.List(FilterStatus(args[1]))
 		} else {
-			task.List(FLAG_NONE)
+			task.List(FILTER_NONE)
 		}
 
 	case _IN_PROGRESS:
